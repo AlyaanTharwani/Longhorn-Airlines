@@ -1,0 +1,95 @@
+@model spr24_team4_finalproject.Models.Reservations
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Reservations</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ReservationNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ReservationNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ResStatus)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ResStatus)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PaymentType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PaymentType)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Subtotal)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Subtotal)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MilesDeduction)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MilesDeduction)
+        </dd>
+        @if (Model.Ticket != null && Model.Ticket.Any() && Model.Ticket.FirstOrDefault().Flight != null)
+        {
+            <dt class="col-sm-2">Flight Number</dt>
+            <dd class="col-sm-10">@Model.Ticket.FirstOrDefault().Flight.FlightNumber</dd>
+
+            <dt class="col-sm-2">Origin City</dt>
+            <dd class="col-sm-10">@Model.Ticket.FirstOrDefault().Flight.FlightRoute.City1</dd>
+
+            <dt class="col-sm-2">Destination City</dt>
+            <dd class="col-sm-10">@Model.Ticket.FirstOrDefault().Flight.FlightRoute.City2</dd>
+        }
+    </dl>
+</div>
+
+<h5>Tickets on this Reservation</h5>
+@if (Model.Ticket != null && Model.Ticket.Any())
+{
+    <table class="table table-primary">
+        <thead>
+            <tr>
+                <th>Ticket ID</th>
+                <th>Passenger Name</th>
+                <th>Seat Number</th>
+                <th>Flight Number</th>
+                <th>Origin City</th>
+                <th>Destination City</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ticket in Model.Ticket)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => ticket.TicketsID)</td>
+                    <td>
+                        @ticket.Ticketholder.FirstName
+                        @(string.IsNullOrWhiteSpace(ticket.Ticketholder.MiddleInitial) || ticket.Ticketholder.MiddleInitial.ToLower() == "nan" ? "" : " " + ticket.Ticketholder.MiddleInitial + ". ")
+                        @ticket.Ticketholder.LastName
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => ticket.SeatNumber)</td>
+                    <td>@Html.DisplayFor(modelItem => ticket.Flight.FlightNumber)</td>
+                    <td>@Html.DisplayFor(modelItem => ticket.Flight.FlightRoute.City1)</td>
+                    <td>@Html.DisplayFor(modelItem => ticket.Flight.FlightRoute.City2)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No tickets found for this reservation.</p>
+}
+
+

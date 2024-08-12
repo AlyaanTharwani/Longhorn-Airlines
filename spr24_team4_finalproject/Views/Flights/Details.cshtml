@@ -1,0 +1,99 @@
+@model spr24_team4_finalproject.Models.Flights
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Flights</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FlightNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FlightNumber)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DepartureDateTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DepartureDateTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ArrivalDateTime)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ArrivalDateTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EconomyPrice)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EconomyPrice)
+        </dd>
+    </dl>
+</div>
+<h5>Flight Information</h5>
+<table class="table table-primary">
+    <tr>
+        <th>Origin City: </th>
+        <th>Destination City: </th>
+        <th>Distance: </th>
+    </tr>
+    <tr>
+        <th>@Html.DisplayFor(model => Model.FlightRoute.City1)</th>
+        <th>@Html.DisplayFor(model => Model.FlightRoute.City2)</th>
+        <th>@Html.DisplayFor(model => Model.FlightRoute.Distance) Miles</th>
+    </tr>
+</table>
+@if (User.Identity.IsAuthenticated)
+{
+    @if (User.IsInRole("Manager"))
+    {
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model?.FlightsID">Edit</a> |
+            <a asp-action="Index">Back to List</a>
+        </div>
+        <div>
+            @if (Model.status == spr24_team4_finalproject.Models.Status.Active)
+            {
+                <form asp-action="ChangeStatus" asp-route-id="@Model?.FlightsID" method="post">
+                    <button type="submit" name="newStatus" value="Departed">Set Departed</button>
+                    <button type="submit" name="newStatus" value="Inactive">Set Inactive</button>
+                </form>
+            }
+        </div>
+    }
+    else @if(User.IsInRole("Gate Agent"))
+    {
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+        <div>
+            @if (Model.status == spr24_team4_finalproject.Models.Status.Active)
+            {
+                <form asp-action="ChangeStatus" asp-route-id="@Model?.FlightsID" method="post">
+                    <button type="submit" name="newStatus" value="Departed">Set Departed</button>
+                    <button type="submit" name="newStatus" value="Inactive">Set Inactive</button>
+                </form>
+            }
+        </div>
+    }
+}
+else
+{
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+}
+
+

@@ -1,0 +1,33 @@
+@model spr24_team4_finalproject.Models.SeatSelectionViewModel
+
+@{
+    ViewData["Title"] = "Confirm Seats";
+}
+
+<h2>Confirm Your Seats</h2>
+
+@if (ViewData["Errors"] != null)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData["Errors"] as List<string>)
+            {
+                <li>@error</li>
+            }
+        </ul>
+    </div>
+}
+
+<form asp-controller="Reservations" asp-action="GenerateTickets" method="post">
+    <input type="hidden" asp-for="Flight.FlightsID" />
+
+    @for (int i = 0; i < Model.NumPassengers; i++)
+    {
+        <div class="form-group">
+            <label>Seat for Passenger @(i + 1):</label>
+            <select asp-for="@Model.SelectedSeats[i]" asp-items="@Model.AvailableSeats" class="form-control"></select>
+            <input type="text" asp-for="@Model.PassengerEmails[i]" class="form-control" placeholder="Email for Passenger @(i + 1)" />
+        </div>
+    }
+    <button type="submit" class="btn btn-primary">Generate Tickets</button>
+</form>

@@ -1,0 +1,106 @@
+@model IEnumerable<spr24_team4_finalproject.Models.Flights>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Longhorn Airlines' Flight Schedule</h1>
+
+<p>
+    <a asp-action="Search" class="btn btn-dark">Search Flights</a>
+</p>
+
+@if (User.Identity.IsAuthenticated)
+{
+    @if (User.IsInRole("Manager"))
+    {
+        <p>
+            <a asp-action="Create" class="btn btn-dark">Create New Flights</a>
+        </p>
+    }
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FlightNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartureDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ArrivalDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EconomyPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvailableSeats)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlightRoute.City1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlightRoute.City2)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) { 
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartureDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivalDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EconomyPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvailableSeats)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FlightRoute.City1)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.FlightRoute.City2)
+            </td>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                @if (User.IsInRole("Manager"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.FlightsID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.FlightsID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.FlightsID">Delete</a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.FlightsID">Details</a>
+                    </td>
+                }
+            }
+            else
+            {
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.FlightsID">Details</a>
+                </td>
+            }
+        </tr>
+}
+    </tbody>
+</table>

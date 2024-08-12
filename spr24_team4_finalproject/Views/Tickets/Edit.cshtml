@@ -1,0 +1,60 @@
+@model spr24_team4_finalproject.Models.Tickets
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Tickets</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TicketsID" />
+            <div class="form-group">
+                <label asp-for="SeatNumber" class="control-label"></label>
+                <select asp-for="SeatNumber" class="form-control"></select>
+                <span asp-validation-for="SeatNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TicketPrice" class="control-label"></label>
+                <input asp-for="TicketPrice" class="form-control" />
+                <span asp-validation-for="TicketPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TicketStatus" class="control-label"></label>
+                <select asp-for="TicketStatus" class="form-control"></select>
+                <span asp-validation-for="TicketStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DiscountType" class="control-label"></label>
+                <select asp-for="DiscountType" class="form-control"></select>
+                <span asp-validation-for="DiscountType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MilesEarned" class="control-label"></label>
+                <input asp-for="MilesEarned" class="form-control" />
+                <span asp-validation-for="MilesEarned" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModificationFee" class="control-label"></label>
+                <input asp-for="ModificationFee" class="form-control" />
+                <span asp-validation-for="ModificationFee" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FlightsID" class="control-label"></label>
+                <select asp-for="FlightsID" class="form-control" asp-items="ViewBag.FlightsID"></select>
+                <span asp-validation-for="FlightsID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,59 @@
+@model spr24_team4_finalproject.Models.Flights
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Flights</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FlightNumber" class="control-label"></label>
+                <input asp-for="FlightNumber" class="form-control" />
+                <span asp-validation-for="FlightNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartureDateTime" class="control-label"></label>
+                <input asp-for="DepartureDateTime" type="time" class="form-control" />
+                <span asp-validation-for="DepartureDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EconomyPrice" class="control-label"></label>
+                <input asp-for="EconomyPrice" class="form-control" />
+                <span asp-validation-for="EconomyPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Flight Routes:</label>
+                @Html.ListBox("SelectedFlightRoutes", (SelectList)ViewBag.AllFlightRoutes, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label class="control-label">Days of the Week:</label>
+                <select id="selectedDaysOfWeek" name="SelectedDaysOfWeek" multiple class="form-control">
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Saturday</option>
+                    <option value="Sunday">Sunday</option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+

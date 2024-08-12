@@ -1,0 +1,16 @@
+﻿@model IEnumerable<spr24_team4_finalproject.Models.Reservations>
+@using spr24_team4_finalproject.Models
+
+@{
+    ViewData["Title"] = "Longhorn Airlines";
+}
+
+<h1>Welcome to Longhorn Airlines!</h1>
+
+<a asp-action="Index" asp-controller="Seed" class="btn btn-dark">Seed Home Page</a>
+@if (User.Identity.IsAuthenticated)
+    {<a asp-action="Index" asp-controller="Reservations" class="btn btn-dark">View Reservations</a>
+     <a asp-action="Create" asp-controller="Reservations" class="btn btn-dark">Book Flight</a>}
+
+<a asp-action="Index" asp-controller="Flights" class="btn btn-dark">Flights</a>
+

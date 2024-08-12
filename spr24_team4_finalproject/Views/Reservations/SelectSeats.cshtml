@@ -1,0 +1,44 @@
+@model spr24_team4_finalproject.Models.SeatSelectionViewModel
+
+<h2>Select Your Seats</h2>
+
+<!-- Form to set number of passengers -->
+<form asp-action="SetPassengers" method="post">
+@if (Model.Flight != null)
+{
+    <input type="hidden" name="flightId" value="@Model.Flight.FlightsID" />
+}
+<div class="form-group">
+    <label for="numPassengers">Number of Passengers:</label>
+    <input type="number" id="numPassengers" name="numPassengers" class="form-control" value="@Model.NumPassengers" required>
+</div>
+<button type="submit" class="btn btn-primary">Set Passengers</button>
+</form>
+
+@if (Model.NumPassengers > 0 && Model.Flight != null)
+{
+    <p>Total Passengers: @Model.NumPassengers</p>
+    <p>Available Seats: @Model.AvailableSeats.Count()</p>
+
+    @if (Model.AvailableSeats.Any())
+    {
+        <form asp-action="ConfirmSeats" method="post">
+            <input type="hidden" asp-for="Flight.FlightsID" />
+            @for (int i = 0; i < Model.NumPassengers; i++)
+            {
+                <div class="form-group">
+                    <label>Select Seat for Passenger @(i + 1):</label>
+                    <select asp-for="@Model.SelectedSeats[i]" asp-items="@Model.AvailableSeats" class="form-control"></select>
+                    <input asp-for="@Model.PassengerNames[i]" class="form-control" placeholder="Passenger Name" />
+                    <input asp-for="@Model.PassengerEmails[i]" class="form-control" placeholder="Passenger Email" />
+                    <input asp-for="@Model.AdvantageNumbers[i]" class="form-control" placeholder="Advantage Number (optional)" />
+                </div>
+            }
+            <button type="submit" class="btn btn-primary">Confirm Seats</button>
+        </form>
+    }
+}
+else
+{
+    <p>Please set the number of passengers and ensure flight details are available to proceed.</p>
+}

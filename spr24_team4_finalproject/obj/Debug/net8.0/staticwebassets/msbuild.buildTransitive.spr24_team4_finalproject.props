@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../buildMultiTargeting/spr24_team4_finalproject.props" />
+</Project>

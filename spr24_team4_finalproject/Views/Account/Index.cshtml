@@ -1,0 +1,80 @@
+﻿@model IndexViewModel
+
+@if (User.Identity.IsAuthenticated)
+{
+    @if (User.IsInRole("Customer"))
+    {
+        ViewBag.Title = "Customer Profile";
+    }
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    @if (User.IsInRole("Gate Agent"))
+{
+        ViewBag.TItle = "Gate Agent Profile";
+    }
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    @if (User.IsInRole("Manager"))
+    {
+        ViewBag.TItle = "Manager Profile";
+    }
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <h4>Account Information</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>User Name:</dt>
+        <dd>@Model.UserName</dd>
+
+        <dt>Name:</dt>
+        <dd>@Model.FullName</dd>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            @if (User.IsInRole("Customer"))
+            {
+                <dt>Date of Birth:</dt>
+                <dd>@Model.DateOfBirth</dd>
+            }
+        }
+
+        <dt>Email:</dt>
+        <dd>@Model.Email</dd>
+
+        <dt>Address:</dt>
+        <dd>@Model.Address</dd>
+
+        <dt>Phone Number:</dt>
+        <dd>@Model.PhoneNumber</dd>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            @if (User.IsInRole("Customer"))
+            {
+                <dt>Advantage Number:</dt>
+                <dd>@Model.AdvNumber</dd>
+            }
+        }
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            @if (User.IsInRole("Customer"))
+            {
+                <dt>Mileage Balance:</dt>
+                <dd>@Model.Miles</dd>
+            }
+        }
+
+        <dt>Password:</dt>
+        <dd>
+            [@Html.ActionLink("Change your password", "ChangePassword")]
+        </dd>
+    </dl>
+</div>

@@ -1,0 +1,89 @@
+@model IEnumerable<spr24_team4_finalproject.Models.Tickets>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SeatNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TicketPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TicketStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiscountType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MilesEarned)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModificationFee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Flight)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SeatNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TicketStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiscountType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MilesEarned)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModificationFee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Flight.FlightsID)
+            </td>
+            @if (User.Identity.IsAuthenticated)
+            {
+                @if (User.IsInRole("Manager"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.TicketsID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.TicketsID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.TicketsID">Delete</a>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.TicketsID">Details</a>
+                    </td>
+                }
+            }
+            else
+            {
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.TicketsID">Details</a>
+                </td>
+            }
+        </tr>
+}
+    </tbody>
+</table>
